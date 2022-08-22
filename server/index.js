@@ -30,19 +30,32 @@ app.post("/api/users/login", async (req, res) => {
 });
 
 app.post("/api/users/register", async (req, res) => {
-    try{
-        await Profile.create({
-            uid: req.body.uid,
-            name: req.body.name,
-            dist: req.body.dist,
-            aadhar: req.body.aadhar,
-            phone: req.body.phone,
-        });
-        return res.json({ status: "ok" , user: req.body.name});
-    }catch(err){
-        return res.json({ status: "error", error: err });
+  try {
+    await Profile.create({
+      uid: req.body.uid,
+      name: req.body.name,
+      dist: req.body.dist,
+      aadhar: req.body.aadhar,
+      phone: req.body.phone,
+    });
+    return res.json({ status: "ok", user: req.body.name });
+  } catch (err) {
+    console.log(err);
+    return res.json({ status: "error", error: err });
+  }
+});
+
+app.post("/api/users/", async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ uid: req.body.uid });
+    if (profile) {
+      return res.json({ status: "ok", user: profile.name });
     }
-})
+  } catch (err) {
+    console.log(err);
+    return res.json({ status: "error", error: err });
+  }
+});
 
 app.listen(8080, () => {
   console.log("Server started at port 8080");
