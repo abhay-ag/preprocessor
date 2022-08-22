@@ -37,8 +37,9 @@ app.post("/api/users/register", async (req, res) => {
       dist: req.body.dist,
       aadhar: req.body.aadhar,
       phone: req.body.phone,
+      role: req.body.role,
     });
-    return res.json({ status: "ok", user: req.body.name });
+    return res.json({ status: "ok", role: req.body.role });
   } catch (err) {
     console.log(err);
     return res.json({ status: "error", error: err });
@@ -49,7 +50,7 @@ app.post("/api/users/", async (req, res) => {
   try {
     const profile = await Profile.findOne({ uid: req.body.uid });
     if (profile) {
-      return res.json({ status: "ok", user: profile.name });
+      return res.json({ status: "ok" , role: profile.role, user: profile.uid});
     }
   } catch (err) {
     console.log(err);

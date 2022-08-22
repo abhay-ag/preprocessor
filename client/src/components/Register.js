@@ -8,6 +8,7 @@ function Register() {
   const [dist, setDist] = useState("")
   const [adr, setAdr] = useState("")
   const [phn, setPhn] = useState("")
+  const [role, setRole] = React.useState("Farmer");
 
   async function handleForm(e) {
     e.preventDefault();
@@ -23,18 +24,24 @@ function Register() {
             dist: dist,
             aadhar: adr,
             phone: phn,
+            role: role,
         }),
     });
 
     const data = await response.json();
+    console.log(data);
     if(data.status === "ok"){
-        console.log(data);
+      dispatch({
+        type: "SET_ROLE",
+        role: data.role,
+      });
     }
 
     setAdr("");
     setDist("");
     setName("");
     setPhn("");
+    setRole("");
   }
   return (
     // full screen form
@@ -55,6 +62,15 @@ function Register() {
         <div>
           <font>Mobile Number: </font>
           <input type="number" value = {phn} onChange = {(e) => setPhn(e.target.value)}/>
+        </div>
+        <div>
+          <font>Select Role</font>
+          <select value={role} onChange = {(e) => setRole(e.target.value)}>
+            <option value="Farmer">Farmer</option>
+            <option value="State">State Dealer</option>
+            <option value="District">District Dealer</option>
+            <option value="Dealer">Dealer</option>
+          </select>
         </div>
         <button>Submit Details</button>
       </form>
