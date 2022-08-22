@@ -48,27 +48,31 @@ app.post("/api/users/register", async (req, res) => {
 });
 
 app.post("/api/produce", async (req, res) => {
-  try{
-    await Product.create({
-      uid: req.body.uid,
-      produce: req.body.produce,
-      dist: req.body.dist,
-      state: req.body.state,
-      crop : req.body.crop,
-    });
+  try {
+    const user = await User.findOne({ uid: req.body.uid });
+    if (!user) {
+      await Product.create({
+        uid: req.body.uid,
+        produce: req.body.produce,
+        dist: req.body.dist,
+        state: req.body.state,
+        crop: req.body.crop,
+      });
+    }else{
+      await Product.updateOne({uid: req.body.uid}, {$set})
+    }
     return res.json({ status: "ok" });
-  }catch (err){
+  } catch (err) {
     console.log(err);
     return res.json({ status: "error", error: err });
   }
-  
-})
+});
 
 app.post("/api/users/", async (req, res) => {
   try {
     const profile = await Profile.findOne({ uid: req.body.uid });
     if (profile) {
-      return res.json({ status: "ok" , user: profile});
+      return res.json({ status: "ok", user: profile });
     }
   } catch (err) {
     console.log(err);
