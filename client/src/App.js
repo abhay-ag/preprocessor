@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import { useStateValue } from "./StateProvider";
 import Register from "./components/Register";
+import Dealer from "./views/Dealer"
 
 function App() {
   // eslint-disable-next-line
@@ -39,9 +40,10 @@ function App() {
   return (
     <div>
       <Navbar />
-      {!user && <Login />}
+      {/* {!user && <Login />}
       {user && reg && <Register />}
-      {role}
+      {role} */}
+      <Dealer />
     </div>
   );
 }
