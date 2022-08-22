@@ -5,12 +5,13 @@ import { AiOutlineClose } from "react-icons/ai";
 
 function Dealer() {
   const [{ user }, dispatch] = useStateValue();
-  const [show, setShow] = useState(false);
+  const [buy, setBuy] = useState(false);
+  const [sell, setSell] = useState(false);
   const [cropName, setName] = useState("");
   const [qty, setQty] = useState(0);
   async function handleSubmit(e) {
     e.preventDefault();
-    setShow(!show);
+    setBuy(!buy);
 
     const resp1 = await fetch("http://localhost:8080/api/users/", {
       method: "POST",
@@ -55,16 +56,16 @@ function Dealer() {
             <div className="flex flex-row w-full justify-center px-8 py-5 items-center">
               <button
                 className="w-96 h-96 rounded-lg bg-white shadow-xl flex flex-col items-center justify-center text-5xl font-thin"
-                onClick={() => setShow(true)}
+                onClick={() => setBuy(true)}
               >
-               BUY
+                BUY
                 <AiOutlinePlus className="text-5xl font-thin mt-5" size={50} />
               </button>
             </div>
             <div className="flex flex-row w-full justify-center px-8 py-5 items-center">
               <button
                 className="w-96 h-96 rounded-lg bg-white shadow-xl flex flex-col items-center justify-center text-5xl font-thin"
-                onClick={() => setShow(true)}
+                onClick={() => setSell(true)}
               >
                 SELL
                 <AiOutlinePlus className="text-5xl font-thin mt-5" size={50} />
@@ -73,11 +74,51 @@ function Dealer() {
           </div>
         </div>
       </div>
-      {show && (
+      {buy && (
         <div className="absolute top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.15)] backdrop-blur-lg flex flex-col items-center justify-center">
           <button
             className="absolute right-16 top-16 p-4 rounded-full bg-white flex"
-            onClick={() => setShow(!show)}
+            onClick={() => setBuy(!buy)}
+          >
+            <AiOutlineClose className="text-5xl font-thin" size={50} />
+          </button>
+          <form
+            className="w-3/4 h-fit bg-white px-8 py-4 rounded-xl space-y-5 flex flex-col"
+            onSubmit={handleSubmit}
+          >
+            <div className="w-full flex flex-row">
+              <font className="text-3xl">Name of Crop: </font>
+              <input
+                className="flex-1 px-4 py-2 border-b ml-5 border-black outline-none"
+                type="text"
+                value={cropName}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="w-full flex flex-row">
+              <font className="text-3xl">Quantity: </font>
+              <input
+                className="flex-1 px-4 py-2 border-b ml-5 border-black outline-none"
+                type="number"
+                value={qty}
+                onChange={(e) => setQty(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className=" bg-[#00B74A] py-2 text-3xl font-bold text-white rounded-xl"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      )}
+
+      {sell && (
+        <div className="absolute top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.15)] backdrop-blur-lg flex flex-col items-center justify-center">
+          <button
+            className="absolute right-16 top-16 p-4 rounded-full bg-white flex"
+            onClick={() => setSell(!sell)}
           >
             <AiOutlineClose className="text-5xl font-thin" size={50} />
           </button>
