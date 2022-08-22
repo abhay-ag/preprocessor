@@ -7,6 +7,10 @@ const User = require("./models/user.model");
 app.use(cors());
 app.use(express.json());
 
+mongoose.connect(
+  "mongodb://root:root@localhost:27017/agritech?&authSource=admin"
+);
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });

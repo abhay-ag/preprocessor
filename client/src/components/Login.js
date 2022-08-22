@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStateValue } from "../StateProvider";
 
-function login() {
-  const [uid, setUid] = React.useState("");
-  const [pwd, setPwd] = React.useState("");
+function Login() {
+  const [uid, setUid] = useState("");
+  const [pwd, setPwd] = useState("");
 
   // eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
@@ -76,4 +76,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;
