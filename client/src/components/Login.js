@@ -7,6 +7,32 @@ function login() {
 
   // eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
+  async function handleForm(e) {
+    e.preventDefault();
+
+    const response = await fetch("http://localhost:8080/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid: uid,
+        pwd: pwd,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.status === "ok") {
+      dispatch({
+        type: "SET_USER",
+        user: data.user,
+      });
+    }
+
+    setPwd("");
+    setUid("");
+  }
   return (
     <div className="container m-auto flex flex-col items-center justify-center h-[70vh] md:h-[80vh] my-16">
       <div className="w-full lg:w-1/2 shadow-lg h-fit md:h-96 py-4 md:py-0 flex flex-col md:rounded-lg overflow-hidden bg-white">
