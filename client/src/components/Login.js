@@ -34,8 +34,35 @@ function Login() {
     setUid("");
   }
   return (
-    <div className="container m-auto flex flex-col items-center justify-center h-[70vh] md:h-[80vh] my-16">
-      <div className="w-full lg:w-1/2 shadow-lg h-fit md:h-96 py-4 md:py-0 flex flex-col md:rounded-lg overflow-hidden bg-white">
+    <div className="container m-auto flex flex-col items-center justify-center">
+      <div className="mt-2 rounded-lg text-2xl font-light px-4 py-2 bg-[#24292f] flex flex-col items-start text-white">
+        <font className="text-4xl font-medium mb-2 underline underline-offset-8">
+          Problems Faced
+        </font>
+        <ul className="list-outside list-disc px-4">
+          <li>
+            Even after working hard, Indian farmers are unable to obtain fair
+            rates for their goods, and intermediaries completely take advantage
+            of them
+          </li>
+        </ul>
+        <font className="mt-4 text-4xl font-medium mb-2 underline underline-offset-8">
+          Solution: <font className="text-[#00B74A]">GreenOps</font>
+        </font>
+        <ul className="list-outside list-disc px-4 space-y-4">
+          <li>
+            This website goes hand in hand maximising profits for both the
+            farmer and the buyer.
+          </li>
+          <li>
+            The marketing system fulfils the job of determining pricing at
+            various stages in addition to conducting the physical and
+            facilitating functions of conveying the commodities from producers
+            to customers.
+          </li>
+        </ul>
+      </div>
+      <div className="w-full lg:w-1/2 mt-16 shadow-lg h-fit md:h-96 py-4 md:py-0 flex flex-col md:rounded-lg overflow-hidden bg-white">
         <h1 className="text-center h-20 flex flex-row justify-center items-center text-3xl w-full font-semibold py-2 md:bg-[#24292f] border-b-2  md:border-b-0 md:text-white">
           Login
         </h1>
