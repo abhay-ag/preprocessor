@@ -1,5 +1,6 @@
 export const initialState = {
     user: null,
+    role: null,
 };
 
 export const reducer = (state, action) => {
@@ -8,6 +9,11 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.user,
+            };
+        case "SET_ROLE":
+            return {
+                ...state,
+                role: action.role,
             };
         default:
             return state;
