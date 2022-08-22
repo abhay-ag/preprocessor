@@ -6,6 +6,7 @@ const Profile = new mongoose.Schema({
     dist: {type: String, required: true},
     aadhar: {type: Number, required: true},
     phone: {type: Number, required: true},
+    role: {type: String, required: true},
 });
 
 const model = mongoose.model('Profile', Profile);
