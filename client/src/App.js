@@ -22,14 +22,15 @@ function App() {
         }),
       });
       const data = await response.json();
+      console.log(data);
       if (data.status === "ok") {
         dispatch({
           type: "SET_ROLE",
-          role: data.role,
+          role: data.user.role,
         });
         dispatch({
           type: "SET_USER",
-          user: data.user,
+          user: data.user.uid,
         });
         setReg(false);
       }
@@ -40,10 +41,11 @@ function App() {
   return (
     <div>
       <Navbar />
-      {/* {!user && <Login />}
+      {!user && <Login />}
       {user && reg && <Register />}
-      {role} */}
-      <Farmer />
+      {
+        role === "Farmer" && <Farmer />
+      }
     </div>
   );
 }

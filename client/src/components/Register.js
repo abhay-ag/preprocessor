@@ -106,7 +106,7 @@ function Register() {
             <option value="Dealer">Dealer</option>
           </select>
         </div>
-        <button class="p-3 px-6 pt-2 my-5 text-white bg-[#24292f] rounded-full">
+        <button className="p-3 px-6 pt-2 my-5 text-white bg-[#24292f] rounded-full">
           Submit Details
         </button>
       </form>

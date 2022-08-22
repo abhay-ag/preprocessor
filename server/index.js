@@ -32,6 +32,7 @@ app.post("/api/users/login", async (req, res) => {
 
 app.post("/api/users/register", async (req, res) => {
   try {
+    console.log(req.body);
     await Profile.create({
       uid: req.body.uid,
       name: req.body.name,
@@ -42,7 +43,6 @@ app.post("/api/users/register", async (req, res) => {
     });
     return res.json({ status: "ok", role: req.body.role });
   } catch (err) {
-    console.log(err);
     return res.json({ status: "error", error: err });
   }
 });

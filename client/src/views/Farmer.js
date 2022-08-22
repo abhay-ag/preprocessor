@@ -6,7 +6,7 @@ import { AiOutlineClose } from "react-icons/ai";
 function Farmer() {
   const [{ user }, dispatch] = useStateValue();
   const [show, setShow] = useState(false);
-  const [cropName, setName] = useState("")
+  const [cropName, setName] = useState("");
   const [qty, setQty] = useState(0);
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,7 +23,8 @@ function Farmer() {
     });
     const data1 = await resp1.json();
 
-    const resp2 = await fetch("https://localhost:8080/api/produce", {
+    console.log(data1);
+    const resp2 = await fetch("http://localhost:8080/api/produce", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,11 +33,12 @@ function Farmer() {
         uid: user,
         produce: qty,
         crop: cropName,
-        dist: data1.dist,
-        state: "Haryana"
+        dist: data1.user.dist,
+        state: "Haryana",
       }),
-    })
+    });
     const data2 = await resp2.json();
+
     console.log(data2);
 
     setName("");
