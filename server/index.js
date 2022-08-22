@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.get("/api/users/login", async (req, res) => {
+app.post("/api/users/login", async (req, res) => {
   const user = await User.findOne({ uid: req.body.uid });
   if (!user) {
     return res.json({ status: "error", error: "Invalid Credentials" });
