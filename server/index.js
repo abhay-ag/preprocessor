@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Profile = require("./models/profile.model");
+const Product = require("./models/produce.model");
 
 app.use(cors());
 app.use(express.json());
@@ -46,11 +47,28 @@ app.post("/api/users/register", async (req, res) => {
   }
 });
 
+app.post("/api/produce", async (req, res) => {
+  try{
+    await Product.create({
+      uid: req.body.uid,
+      produce: req.body.produce,
+      dist: req.body.dist,
+      state: req.body.state,
+      crop : req.body.crop,
+    });
+    return res.json({ status: "ok" });
+  }catch (err){
+    console.log(err);
+    return res.json({ status: "error", error: err });
+  }
+  
+})
+
 app.post("/api/users/", async (req, res) => {
   try {
     const profile = await Profile.findOne({ uid: req.body.uid });
     if (profile) {
-      return res.json({ status: "ok" , role: profile.role, user: profile.uid});
+      return res.json({ status: "ok" , user: profile});
     }
   } catch (err) {
     console.log(err);
