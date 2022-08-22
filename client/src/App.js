@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import { useStateValue } from "./StateProvider";
+import Register from "./components/Register";
 
 function App() {
   // eslint-disable-next-line
@@ -10,7 +11,7 @@ function App() {
     <div>
       <Navbar />
       {!user && <Login />}
-      {user && <div>{user} Logged in</div>}
+      {user && <Register />}
     </div>
   );
 }

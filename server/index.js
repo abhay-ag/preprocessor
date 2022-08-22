@@ -38,7 +38,7 @@ app.post("/api/users/register", async (req, res) => {
             aadhar: req.body.aadhar,
             phone: req.body.phone,
         });
-        return res.json({ status: "ok" });
+        return res.json({ status: "ok" , user: req.body.name});
     }catch(err){
         return res.json({ status: "error", error: err });
     }
