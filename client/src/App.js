@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { useStateValue } from "./StateProvider";
 
 function App() {
+  // eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
   return (
     <div>
