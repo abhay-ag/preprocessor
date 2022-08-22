@@ -33,15 +33,32 @@ app.post("/api/users/login", async (req, res) => {
 
 app.post("/api/users/register", async (req, res) => {
   try {
-    console.log(req.body);
-    await Profile.create({
-      uid: req.body.uid,
-      name: req.body.name,
-      dist: req.body.dist,
-      aadhar: req.body.aadhar,
-      phone: req.body.phone,
-      role: req.body.role,
-    });
+    if (req.body.role === "Farmer") {
+      console.log(req.body);
+      await Profile.create({
+        uid: req.body.uid,
+        name: req.body.name,
+        dist: req.body.dist,
+        aadhar: req.body.aadhar,
+        phone: req.body.phone,
+        role: req.body.role,
+      });
+    } else if (req.body.role === "State") {
+      await Profile.create({
+        uid: req.body.uid,
+        name: req.body.name,
+        dist: req.body.dist,
+        aadhar: req.body.aadhar,
+        phone: req.body.phone,
+        role: req.body.role,
+      });
+
+      await Seller.create({
+        uid: req.body.uid,
+        limit: 200,
+        crop: "Wheat",
+      });
+    }
     return res.json({ status: "ok", role: req.body.role });
   } catch (err) {
     return res.json({ status: "error", error: err });
@@ -89,19 +106,20 @@ app.post("/api/users/", async (req, res) => {
   }
 });
 
+app.post("/api/sell", async (req, res) => {
+  const user = await Seller.findOne({ uid: req.body.uid });
+
+  return res.json({ status: "ok", limit: user.limit });
+});
+
 app.post("/api/seller/buy", async (req, res) => {
   try {
     const user = await Seller.findOne({ uid: req.body.uid });
-    if (!user) {
-      await Seller.create({
-        uid: req.body.uid,
-        limit: 200,
-        crop: req.body.crop,
-      });
-    } else {
-      await Seller.updateOne({ uid: req.body.uid }, { $set: { limit: 200 - req.body.limit } });
-      return res.json({ status: "ok" });
-    }
+    await Seller.updateOne(
+      { uid: req.body.uid },
+      { $set: { limit: parseInt(user.limit) - parseInt(req.body.limit) } }
+    );
+    return res.json({ status: "ok" });
   } catch (err) {
     console.log(err);
     return res.json({ status: "error", error: err });
@@ -111,16 +129,11 @@ app.post("/api/seller/buy", async (req, res) => {
 app.post("/api/seller/sell", async (req, res) => {
   try {
     const user = await Seller.findOne({ uid: req.body.uid });
-    if (!user) {
-      await Seller.create({
-        uid: req.body.uid,
-        limit: req.body.limit,
-        crop: req.body.crop,
-      });
-    } else {
-      await Seller.updateOne({ uid: req.body.uid }, { $set: { limit: user.limit + req.body.limit } });
-      return res.json({ status: "ok" });
-    }
+    await Seller.updateOne(
+      { uid: req.body.uid },
+      { $set: { limit: parseInt(user.limit) + parseInt(req.body.limit) } }
+    );
+    return res.json({ status: "ok" });
   } catch (err) {
     console.log(err);
     return res.json({ status: "error", error: err });

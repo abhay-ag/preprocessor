@@ -13,7 +13,7 @@ function Dealer() {
     e.preventDefault();
     setShow1(!show1);
 
-    const resp1 = await fetch("http://localhost:8080/api/users/", {
+    const resp1 = await fetch("http://localhost:8080/api/sell", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,14 +24,58 @@ function Dealer() {
     });
     const data1 = await resp1.json();
 
-    console.log(data1)
+    console.log(data1);
+
+    if (qty > data1.limit) {
+      alert("You can only sell upto " + data1.limit + "kg of produce");
+    } else {
+      const resp2 = await fetch("http://localhost:8080/api/seller/buy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user,
+          limit: qty,
+        }),
+      });
+      const data2 = await resp2.json();
+      console.log(data2);
+    }
 
     setName("");
     setQty(0);
   }
-  const handleSubmitTwo = (e) => {
+  async function handleSubmitTwo(e) {
     e.preventDefault();
     setShow2(!show2);
+    const resp1 = await fetch("http://localhost:8080/api/sell", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid: user,
+      }),
+    });
+    const data1 = await resp1.json();
+
+    console.log(data1);
+    const resp2 = await fetch("http://localhost:8080/api/seller/sell", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uid: user,
+        limit: qty,
+      }),
+    });
+    const data2 = await resp2.json();
+    console.log(data2);
+
+    setName("");
+    setQty(0);
   }
   return (
     <>
@@ -56,7 +100,6 @@ function Dealer() {
               <AiOutlineMinus className="text-5xl font-thin mt-5" size={50} />
             </button>
           </div>
-          
         </div>
       </div>
       {show1 && (

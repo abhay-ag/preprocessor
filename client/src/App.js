@@ -42,12 +42,14 @@ function App() {
   return (
     <div>
       <Navbar />
-      {/* {!user && <Login />}
+      {!user && <Login />}
       {user && reg && <Register />}
       {
         role === "Farmer" && <Farmer />
-      } */}
-      <Dealer />
+      }
+      {
+        role === "State" && <Dealer />
+      }
     </div>
   );
 }
