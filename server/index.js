@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Profile = require("./models/profile.model");
 const Product = require("./models/produce.model");
+const Seller = require("./models/seller.model");
 
 app.use(cors());
 app.use(express.json());
@@ -59,8 +60,15 @@ app.post("/api/produce", async (req, res) => {
         state: req.body.state,
         crop: req.body.crop,
       });
-    }else{
-      await Product.updateOne({crop: req.body.crop}, {$set: {produce: parseInt(req.body.produce) + parseInt(user.produce)}});
+    } else {
+      await Product.updateOne(
+        { crop: req.body.crop },
+        {
+          $set: {
+            produce: parseInt(req.body.produce) + parseInt(user.produce),
+          },
+        }
+      );
     }
     return res.json({ status: "ok" });
   } catch (err) {
@@ -74,6 +82,44 @@ app.post("/api/users/", async (req, res) => {
     const profile = await Profile.findOne({ uid: req.body.uid });
     if (profile) {
       return res.json({ status: "ok", user: profile });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.json({ status: "error", error: err });
+  }
+});
+
+app.post("/api/seller/buy", async (req, res) => {
+  try {
+    const user = await Seller.findOne({ uid: req.body.uid });
+    if (!user) {
+      await Seller.create({
+        uid: req.body.uid,
+        limit: 200,
+        crop: req.body.crop,
+      });
+    } else {
+      await Seller.updateOne({ uid: req.body.uid }, { $set: { limit: 200 - req.body.limit } });
+      return res.json({ status: "ok" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.json({ status: "error", error: err });
+  }
+});
+
+app.post("/api/seller/sell", async (req, res) => {
+  try {
+    const user = await Seller.findOne({ uid: req.body.uid });
+    if (!user) {
+      await Seller.create({
+        uid: req.body.uid,
+        limit: req.body.limit,
+        crop: req.body.crop,
+      });
+    } else {
+      await Seller.updateOne({ uid: req.body.uid }, { $set: { limit: user.limit + req.body.limit } });
+      return res.json({ status: "ok" });
     }
   } catch (err) {
     console.log(err);
