@@ -68,7 +68,7 @@ app.post("/api/users/register", async (req, res) => {
 
 app.post("/api/produce", async (req, res) => {
   try {
-    const user = await Product.findOne({ crop: req.body.crop });
+    const user = await Product.findOne({ crop: req.body.crop, uid: req.body.uid });
     console.log(user);
     if (!user) {
       await Product.create({
@@ -80,7 +80,7 @@ app.post("/api/produce", async (req, res) => {
       });
     } else {
       await Product.updateOne(
-        { crop: req.body.crop },
+        { crop: req.body.crop, uid: req.body.uid },
         {
           $set: {
             produce: parseInt(req.body.produce) + parseInt(user.produce),
@@ -124,6 +124,17 @@ app.post("/api/seller/buy", async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.json({ status: "error", error: err });
+  }
+});
+app.post("/api/users/add", async (req, res) => {
+  try {
+    await User.create({
+      uid: req.body.uid,
+      pwd: req.body.pwd,
+    });
+    res.json({ status: "ok" , user: req.body.uid});
+  } catch (err) {
+    res.json({ status: "error", error: "Duplicate email" });
   }
 });
 
