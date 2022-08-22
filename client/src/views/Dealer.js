@@ -61,18 +61,22 @@ function Dealer() {
     const data1 = await resp1.json();
 
     console.log(data1);
-    const resp2 = await fetch("http://localhost:8080/api/seller/sell", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        uid: user,
-        limit: qty,
-      }),
-    });
-    const data2 = await resp2.json();
-    console.log(data2);
+    if (qty > data1.qty) {
+      alert("You can only sell upto " + data1.qty + "kg of produce");
+    } else {
+      const resp2 = await fetch("http://localhost:8080/api/seller/sell", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid: user,
+          limit: qty,
+        }),
+      });
+      const data2 = await resp2.json();
+      console.log(data2);
+    }
 
     setName("");
     setQty(0);

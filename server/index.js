@@ -57,6 +57,7 @@ app.post("/api/users/register", async (req, res) => {
         uid: req.body.uid,
         limit: 200,
         crop: "Wheat",
+        qty: 0
       });
     }
     return res.json({ status: "ok", role: req.body.role });
@@ -109,7 +110,7 @@ app.post("/api/users/", async (req, res) => {
 app.post("/api/sell", async (req, res) => {
   const user = await Seller.findOne({ uid: req.body.uid });
 
-  return res.json({ status: "ok", limit: user.limit });
+  return res.json({ status: "ok", limit: user.limit , qty: user.qty });
 });
 
 app.post("/api/seller/buy", async (req, res) => {
@@ -117,7 +118,7 @@ app.post("/api/seller/buy", async (req, res) => {
     const user = await Seller.findOne({ uid: req.body.uid });
     await Seller.updateOne(
       { uid: req.body.uid },
-      { $set: { limit: parseInt(user.limit) - parseInt(req.body.limit) } }
+      { $set: { limit: parseInt(user.limit) - parseInt(req.body.limit) , qty: parseInt(user.qty) + parseInt(req.body.limit) }}
     );
     return res.json({ status: "ok" });
   } catch (err) {
@@ -131,7 +132,7 @@ app.post("/api/seller/sell", async (req, res) => {
     const user = await Seller.findOne({ uid: req.body.uid });
     await Seller.updateOne(
       { uid: req.body.uid },
-      { $set: { limit: parseInt(user.limit) + parseInt(req.body.limit) } }
+      { $set: { limit: parseInt(user.limit) + parseInt(req.body.limit) , qty: parseInt(user.qty) - parseInt(req.body.limit) }}
     );
     return res.json({ status: "ok" });
   } catch (err) {

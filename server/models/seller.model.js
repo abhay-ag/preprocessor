@@ -8,6 +8,7 @@ const Seller = new mongoose.Schema({
     },
     limit: {type: Number, required: true},
     crop: {type: String, required: true},
+    qty: {type: Number, required: true},
 });
 
 const model = mongoose.model('Seller', Seller);

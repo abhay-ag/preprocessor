@@ -102,8 +102,6 @@ function Register() {
           >
             <option value="Farmer">Farmer</option>
             <option value="State">State Dealer</option>
-            <option value="District">District Dealer</option>
-            <option value="Dealer">Dealer</option>
           </select>
         </div>
         <button className="p-3 px-6 pt-2 my-5 text-white bg-[#24292f] rounded-full">
