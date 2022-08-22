@@ -32,7 +32,7 @@ function Farmer() {
       body: JSON.stringify({
         uid: user,
         produce: qty,
-        crop: cropName,
+        crop: cropName.toLowerCase(),
         dist: data1.user.dist,
         state: "Haryana",
       }),

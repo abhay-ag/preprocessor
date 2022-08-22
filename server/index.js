@@ -49,7 +49,8 @@ app.post("/api/users/register", async (req, res) => {
 
 app.post("/api/produce", async (req, res) => {
   try {
-    const user = await Product.findOne({ uid: req.body.uid });
+    const user = await Product.findOne({ crop: req.body.crop });
+    console.log(user);
     if (!user) {
       await Product.create({
         uid: req.body.uid,
