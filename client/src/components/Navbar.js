@@ -10,6 +10,10 @@ function Navbar() {
         type: 'SET_USER',
         user: null
       })
+      dispatch({
+        type: 'SET_ROLE',
+        role: null
+      })
     }
   }
   return (
