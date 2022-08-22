@@ -60,7 +60,7 @@ app.post("/api/produce", async (req, res) => {
         crop: req.body.crop,
       });
     }else{
-      await Product.updateOne({uid: req.body.uid}, {$set: {produce: parseInt(req.body.produce) + parseInt(user.produce)}});
+      await Product.updateOne({crop: req.body.crop}, {$set: {produce: parseInt(req.body.produce) + parseInt(user.produce)}});
     }
     return res.json({ status: "ok" });
   } catch (err) {
