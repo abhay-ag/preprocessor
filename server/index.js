@@ -49,7 +49,7 @@ app.post("/api/users/register", async (req, res) => {
 
 app.post("/api/produce", async (req, res) => {
   try {
-    const user = await User.findOne({ uid: req.body.uid });
+    const user = await Product.findOne({ uid: req.body.uid });
     if (!user) {
       await Product.create({
         uid: req.body.uid,
@@ -59,7 +59,7 @@ app.post("/api/produce", async (req, res) => {
         crop: req.body.crop,
       });
     }else{
-      await Product.updateOne({uid: req.body.uid}, {$set})
+      await Product.updateOne({uid: req.body.uid}, {$set: {produce: parseInt(req.body.produce) + parseInt(user.produce)}});
     }
     return res.json({ status: "ok" });
   } catch (err) {
