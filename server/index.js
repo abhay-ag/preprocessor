@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
+const Profile = require("./models/profile.model");
 
 app.use(cors());
 app.use(express.json());
@@ -27,6 +28,21 @@ app.post("/api/users/login", async (req, res) => {
     return res.json({ status: "ok", user: user.uid });
   }
 });
+
+app.post("/api/users/register", async (req, res) => {
+    try{
+        await Profile.create({
+            uid: req.body.uid,
+            name: req.body.name,
+            dist: req.body.dist,
+            aadhar: req.body.aadhar,
+            phone: req.body.phone,
+        });
+        return res.json({ status: "ok" });
+    }catch(err){
+        return res.json({ status: "error", error: err });
+    }
+})
 
 app.listen(8080, () => {
   console.log("Server started at port 8080");
