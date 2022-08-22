@@ -46,26 +46,29 @@ function Register() {
   return (
     // full screen form
     <div className="container m-auto flex flex-col items-center justify-center h-[70vh] md:h-[80vh] my-16">
-      <form onSubmit={handleForm} className = " flex flex-col items-center justify-center bg-white px-8 py-2 rounded-xl shadow-xl">
-        <div className="flex flex-row justify-center space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
+      <form onSubmit={handleForm} className = " flex flex-col items-center justify-center bg-white rounded-xl shadow-xl">
+      <div className="rounded-t-xl bg-[#24292f] text-white font-bold text-2xl py-4 w-full flex items-center justify-center">
+        Register
+      </div>
+        <div className="px-8 flex flex-row justify-center space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
           <font className = "flex-1 text-right">Name: </font>
-          <input required className="flex-1 outline-none px-2 py-1 border-b border-black" type="text" value = {name} onChange = {(e) => setName(e.target.value)} />
+          <input required className="font-medium text-xl flex-1 outline-none px-2 py-1 border-b border-black" type="text" value = {name} onChange = {(e) => setName(e.target.value)} />
         </div>
-        <div className="flex flex-row justify-center space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
+        <div className="px-8 flex flex-row justify-center space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
           <font className = "flex-1 text-right">District: </font>
-          <input required className="flex-1 outline-none px-2 py-1 border-b border-black" type="text" value = {dist} onChange = {(e) => setDist(e.target.value)}/>
+          <input required className="font-medium text-xl flex-1 outline-none px-2 py-1 border-b border-black" type="text" value = {dist} onChange = {(e) => setDist(e.target.value)}/>
         </div>
-        <div className="flex flex-row justify-left space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
+        <div className="px-8 flex flex-row justify-left space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
           <font className = "flex-1 text-right">Aadhar Number: </font>
-          <input required className="flex-1 outline-none px-2 py-1 border-b border-black" type="number" value = {adr} onChange = {(e) => setAdr(e.target.value)}/>
+          <input required className="font-medium text-xl flex-1 outline-none px-2 py-1 border-b border-black" type="number" value = {adr} onChange = {(e) => setAdr(e.target.value)}/>
         </div>
-        <div className="flex flex-row justify-center space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
+        <div className="px-8 flex flex-row justify-center space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
           <font className = "flex-1 text-right">Mobile Number: </font>
-          <input required className="flex-1 outline-none px-2 py-1 border-b border-black" type="number" value = {phn} onChange = {(e) => setPhn(e.target.value)}/>
+          <input required className="font-medium text-xl flex-1 outline-none px-2 py-1 border-b border-black" type="number" value = {phn} onChange = {(e) => setPhn(e.target.value)}/>
         </div>
-        <div className="flex flex-row justify-center  space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
+        <div className="px-8 flex flex-row justify-center  space-x-4 items-center text-3xl w-full font-semibold py-2  border-b-2  md:border-b-0 ">
           <font className = "flex-1 text-right">Select Role:</font>
-          <select className="flex-[1.6_0_0%] outline-none px-2 py-1 border-b border-black" value={role} onChange = {(e) => setRole(e.target.value)}>
+          <select className="font-medium text-xl flex-[1.6_0_0%] outline-none px-2 py-1 border-b border-black" value={role} onChange = {(e) => setRole(e.target.value)}>
             <option value="Farmer">Farmer</option>
             <option value="State">State Dealer</option>
             <option value="District">District Dealer</option>
