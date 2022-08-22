@@ -4,6 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 
 function Farmer() {
+  //  eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
   const [show, setShow] = useState(false);
   const [cropName, setName] = useState("");

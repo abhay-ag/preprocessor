@@ -4,6 +4,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 
 function Dealer() {
+  //  eslint-disable-next-line
   const [{ user }, dispatch] = useStateValue();
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
