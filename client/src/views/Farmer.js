@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useStateValue } from "../StateProvider";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
+import Bidcard from "../components/Bidcard";
 
 function Farmer() {
   //  eslint-disable-next-line
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, bids }, dispatch] = useStateValue();
+  console.log(bids[0]);
   const [show, setShow] = useState(false);
   const [cropName, setName] = useState("");
   const [qty, setQty] = useState(0);
@@ -102,6 +104,21 @@ function Farmer() {
           </form>
         </div>
       )}
+      <div className="container m-auto h-fit my-4 py-4 flex flex-col items-center justify-center">
+        <div className="text-4xl font-bold underline underline-offset-4 my-8">Open Bids</div>
+        <div className="flex flex-row items-center justify-around flex-wrap w-3/4">
+          {bids[0]?.map((bid) => {
+            return (
+              <Bidcard
+                qty={bid.qty}
+                amt={bid.amt}
+                status={bid.status}
+                key={bid._id}
+              />
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }

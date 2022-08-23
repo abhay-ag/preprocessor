@@ -58,7 +58,7 @@ app.post("/api/users/register", async (req, res) => {
         uid: req.body.uid,
         limit: 200,
         crop: "Wheat",
-        qty: 0
+        qty: 0,
       });
     }
     return res.json({ status: "ok", role: req.body.role });
@@ -69,7 +69,10 @@ app.post("/api/users/register", async (req, res) => {
 
 app.post("/api/produce", async (req, res) => {
   try {
-    const user = await Product.findOne({ crop: req.body.crop, uid: req.body.uid });
+    const user = await Product.findOne({
+      crop: req.body.crop,
+      uid: req.body.uid,
+    });
     console.log(user);
     if (!user) {
       await Product.create({
@@ -111,7 +114,7 @@ app.post("/api/users/", async (req, res) => {
 app.post("/api/sell", async (req, res) => {
   const user = await Seller.findOne({ uid: req.body.uid });
 
-  return res.json({ status: "ok", limit: user.limit , qty: user.qty });
+  return res.json({ status: "ok", limit: user.limit, qty: user.qty });
 });
 
 app.post("/api/seller/buy", async (req, res) => {
@@ -119,7 +122,12 @@ app.post("/api/seller/buy", async (req, res) => {
     const user = await Seller.findOne({ uid: req.body.uid });
     await Seller.updateOne(
       { uid: req.body.uid },
-      { $set: { limit: parseInt(user.limit) - parseInt(req.body.limit) , qty: parseInt(user.qty) + parseInt(req.body.limit) }}
+      {
+        $set: {
+          limit: parseInt(user.limit) - parseInt(req.body.limit),
+          qty: parseInt(user.qty) + parseInt(req.body.limit),
+        },
+      }
     );
     return res.json({ status: "ok" });
   } catch (err) {
@@ -133,7 +141,7 @@ app.post("/api/users/add", async (req, res) => {
       uid: req.body.uid,
       pwd: req.body.pwd,
     });
-    res.json({ status: "ok" , user: req.body.uid});
+    res.json({ status: "ok", user: req.body.uid });
   } catch (err) {
     res.json({ status: "error", error: "Duplicate email" });
   }
@@ -144,7 +152,12 @@ app.post("/api/seller/sell", async (req, res) => {
     const user = await Seller.findOne({ uid: req.body.uid });
     await Seller.updateOne(
       { uid: req.body.uid },
-      { $set: { limit: parseInt(user.limit) + parseInt(req.body.limit) , qty: parseInt(user.qty) - parseInt(req.body.limit) }}
+      {
+        $set: {
+          limit: parseInt(user.limit) + parseInt(req.body.limit),
+          qty: parseInt(user.qty) - parseInt(req.body.limit),
+        },
+      }
     );
     return res.json({ status: "ok" });
   } catch (err) {
@@ -154,27 +167,30 @@ app.post("/api/seller/sell", async (req, res) => {
 });
 
 app.post("/api/add/bid", async (req, res) => {
-  try{
-    const user = await Bid.findOne({ uid: req.body.uid, crop: req.body.crop  }); 
-    if(!user){
-      await Bid.create({
-        uid: req.body.uid,
-        crop: req.body.crop,
-        amt: req.body.amt,
-        qty: req.body.quan,
-        status : "Open"
-      });
-    }else{
-      await Bid.updateOne(
-        { uid: req.body.uid, crop: req.body.crop },
-        { $set: { amt: req.body.amt, qty: req.body.qty, status : "Open" }}
-      );
-    }
-  }catch(err){
+  try {
+    // const user = await Bid.findOne({ uid: req.body.uid, crop: req.body.crop });
+    await Bid.create({
+      uid: req.body.uid,
+      crop: req.body.crop,
+      amt: req.body.amt,
+      qty: req.body.quan,
+      status: "Open",
+    });
+  } catch (err) {
     console.log(err);
     return res.json({ status: "error", error: err });
   }
-})
+});
+
+app.get("/api/get/bid", (req, res) => {
+  Bid.find({ status: "Open", crop: "wheat" }, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json({ status: "error", error: err });
+    }
+    return res.json({ status: "ok", data: data });
+  }).sort({ amt: -1 });
+});
 
 app.listen(8080, () => {
   console.log("Server started at port 8080");

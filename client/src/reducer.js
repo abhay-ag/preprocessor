@@ -1,6 +1,7 @@
 export const initialState = {
     user: null,
     role: null,
+    bids: [],  
 };
 
 export const reducer = (state, action) => {
@@ -14,6 +15,11 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 role: action.role,
+            };
+        case "SET_BIDS":
+            return {
+                ...state,
+                bids: [...state.bids, action.bids],
             };
         default:
             return state;

@@ -35,6 +35,19 @@ function App() {
         });
         setReg(false);
       }
+      if (role === "Farmer") {
+        const resp = await fetch("http://localhost:8080/api/get/bid", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await resp.json();
+        dispatch({
+          type: "SET_BIDS",
+          bids: data.data,
+        });
+      }
     }
     checkReg();
     //  eslint-disable-next-line
@@ -44,12 +57,8 @@ function App() {
       <Navbar />
       {!user && <Login />}
       {user && reg && <Register />}
-      {
-        role === "Farmer" && <Farmer />
-      }
-      {
-        role === "State" && <Dealer />
-      }
+      {role === "Farmer" && <Farmer />}
+      {role === "State" && <Dealer />}
     </div>
   );
 }
