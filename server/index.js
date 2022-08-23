@@ -192,6 +192,17 @@ app.get("/api/get/bid", (req, res) => {
   }).sort({ amt: -1 });
 });
 
+app.post("/api/close/bid", async (req, res) => {
+  const farmer = Profile.findOne({ uid: req.body.usr });
+
+  await Bid.updateOne(
+    { qty: req.body.quantity, amt: req.body.amount },
+    { $set: { status: "Closed" } }
+  );
+
+  return res.json({ status: "Closed" });
+});
+
 app.listen(8080, () => {
   console.log("Server started at port 8080");
 });
