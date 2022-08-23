@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useStateValue } from "../StateProvider";
 
 function Bidcard({ _id, qty, amt, status }) {
