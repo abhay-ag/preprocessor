@@ -193,7 +193,22 @@ app.get("/api/get/bid", (req, res) => {
 });
 
 app.post("/api/close/bid", async (req, res) => {
-  const farmer = Profile.findOne({ uid: req.body.usr });
+  const { uid } = await Bid.findOne({
+    qty: req.body.quantity,
+    amt: req.body.amount,
+  });
+
+  const user = await Seller.findOne({ uid: uid });
+
+  await Seller.updateOne(
+    { uid: uid },
+    {
+      $set: {
+        limit: parseInt(user.limit) - parseInt(req.body.amount),
+        qty: parseInt(user.qty) + parseInt(req.body.amount),
+      },
+    }
+  );
 
   await Bid.updateOne(
     { qty: req.body.quantity, amt: req.body.amount },
