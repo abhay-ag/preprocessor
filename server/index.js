@@ -6,6 +6,7 @@ const User = require("./models/user.model");
 const Profile = require("./models/profile.model");
 const Product = require("./models/produce.model");
 const Seller = require("./models/seller.model");
+const Bid = require("./models/bid.model");
 
 app.use(cors());
 app.use(express.json());
@@ -151,6 +152,29 @@ app.post("/api/seller/sell", async (req, res) => {
     return res.json({ status: "error", error: err });
   }
 });
+
+app.post("/api/add/bid", async (req, res) => {
+  try{
+    const user = await Bid.findOne({ uid: req.body.uid, crop: req.body.crop  }); 
+    if(!user){
+      await Bid.create({
+        uid: req.body.uid,
+        crop: req.body.crop,
+        amt: req.body.amt,
+        qty: req.body.qty,
+        status : "Open"
+      });
+    }else{
+      await Bid.updateOne(
+        { uid: req.body.uid, crop: req.body.crop },
+        { $set: { amt: req.body.amt, qty: req.body.qty, status : "Open" }}
+      );
+    }
+  }catch(err){
+    console.log(err);
+    return res.json({ status: "error", error: err });
+  }
+})
 
 app.listen(8080, () => {
   console.log("Server started at port 8080");
