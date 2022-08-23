@@ -198,6 +198,17 @@ app.post("/api/close/bid", async (req, res) => {
     amt: req.body.amount,
   });
 
+  const farmer = await Product.findOne({ uid: req.body.usr });
+
+  await Product.updateOne(
+    { uid: req.body.usr },
+    {
+      $set: {
+        produce: parseInt(farmer.produce) - parseInt(req.body.quantity),
+      },
+    }
+  );
+
   const user = await Seller.findOne({ uid: uid });
 
   await Seller.updateOne(
