@@ -204,8 +204,8 @@ app.post("/api/close/bid", async (req, res) => {
     { uid: uid },
     {
       $set: {
-        limit: parseInt(user.limit) - parseInt(req.body.amount),
-        qty: parseInt(user.qty) + parseInt(req.body.amount),
+        limit: parseInt(user.limit) - parseInt(req.body.quantity),
+        qty: parseInt(user.qty) + parseInt(req.body.quantity),
       },
     }
   );
