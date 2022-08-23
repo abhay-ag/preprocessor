@@ -10,6 +10,7 @@ function Dealer() {
   const [show2, setShow2] = useState(false);
   const [cropName, setName] = useState("");
   const [qty, setQty] = useState(0);
+  const [amount, setAmt] = useState(0);
   async function handleSubmit(e) {
     e.preventDefault();
     setShow1(!show1);
@@ -30,14 +31,16 @@ function Dealer() {
     if (qty > data1.limit) {
       alert("You can only sell upto " + data1.limit + "kg of produce");
     } else {
-      const resp2 = await fetch("http://localhost:8080/api/seller/buy", {
+      const resp2 = await fetch("http://localhost:8080/api/add/bid", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           uid: user,
-          limit: qty,
+          quan: qty,
+          amt: amount,
+          crop: cropName.toLowerCase(),
         }),
       });
       const data2 = await resp2.json();
@@ -135,6 +138,15 @@ function Dealer() {
                 type="number"
                 value={qty}
                 onChange={(e) => setQty(e.target.value)}
+              />
+            </div>
+            <div className="w-full flex flex-row">
+              <font className="text-3xl">Expected Amount (per tonne): </font>
+              <input
+                className="flex-1 px-4 py-2 border-b ml-5 border-black outline-none"
+                type="number"
+                value={amount}
+                onChange={(e) => setAmt(e.target.value)}
               />
             </div>
             <button

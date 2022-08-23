@@ -161,7 +161,7 @@ app.post("/api/add/bid", async (req, res) => {
         uid: req.body.uid,
         crop: req.body.crop,
         amt: req.body.amt,
-        qty: req.body.qty,
+        qty: req.body.quan,
         status : "Open"
       });
     }else{
